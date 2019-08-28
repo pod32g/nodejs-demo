@@ -1,7 +1,8 @@
-import sqlite3 from 'sqlite3';
+import Base from './Base';
+import { Statement } from 'sqlite3';
 
-class _Users {
-    db = new sqlite3.Database('db.sqlite');
+class _Users extends Base {
+    result: any[] = []
 
     createTable = () => {
         this.db.serialize(() => {
@@ -19,14 +20,16 @@ class _Users {
     }
 
     filter = (username: string) => {
-        let result: any[] = [];
-        this.db.serialize(() => {
-            this.db.each(`SELECT * from users WHERE username=${username}`, (err, row) => {
-                result.push(row);
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM users WHERE username='${username}'`, (err: Error, result: Statement) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
             });
-        });
-
-        return result;
+        })
     }
 
     closeDatabaseConnection = () => {

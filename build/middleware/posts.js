@@ -17,37 +17,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var base_1 = __importDefault(require("./base"));
-var AuthenticationMiddleware = /** @class */ (function (_super) {
-    __extends(AuthenticationMiddleware, _super);
-    function AuthenticationMiddleware() {
+var PostsMiddleware = /** @class */ (function (_super) {
+    __extends(PostsMiddleware, _super);
+    function PostsMiddleware() {
         var _this = _super.call(this) || this;
-        _this.login = function (req, res, next) {
+        _this.newPost = function (req, res, next) {
             var fields = [
-                "username",
-                "password"
-            ];
-            _this.checkForFields(req, res, fields);
-            next();
-        };
-        _this.test = function (req, res, next) {
-            var fields = [
-                "token"
+                "content",
+                "image"
             ];
             _this.checkAuthentication(req, res);
-            _this.checkForFields(req, res, fields);
-            res.locals.user = _this.user;
-            next();
-        };
-        _this.register = function (req, res, next) {
-            var fields = [
-                "username",
-                "password"
-            ];
             _this.checkForFields(req, res, fields);
             next();
         };
         return _this;
     }
-    return AuthenticationMiddleware;
+    return PostsMiddleware;
 }(base_1.default));
-exports.default = AuthenticationMiddleware;
+exports.default = PostsMiddleware;

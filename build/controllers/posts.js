@@ -34,55 +34,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var webtokens_1 = __importDefault(require("../utils/webtokens"));
-var Users_1 = require("../models/Users");
-var Authentication = /** @class */ (function () {
-    function Authentication() {
+var Posts_1 = require("../models/Posts");
+var Post = /** @class */ (function () {
+    function Post() {
         var _this = this;
-        this.login = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var _a, username, password, user, resp, token;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        _a = req.body, username = _a.username, password = _a.password;
-                        return [4 /*yield*/, Users_1.Users.filter(username)];
+        this.newPost = function (req, res) {
+            var _a = req.body, content = _a.content, image = _a.image;
+            Posts_1.Posts.createNewPost(content, image);
+            res.json({
+                status: 'ALL OK'
+            });
+        };
+        this.getAllPosts = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            var posts;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, Posts_1.Posts.getAll()];
                     case 1:
-                        user = _b.sent();
-                        resp = {
-                            error: "Wrong username/password"
-                        };
-                        if (username === user.username && password === user.password) {
-                            token = webtokens_1.default.encrypt(username);
-                            resp = {
-                                token: token
-                            };
-                        }
-                        res.json(resp);
+                        posts = _a.sent();
+                        res.json({
+                            posts: posts
+                        });
                         return [2 /*return*/];
                 }
             });
         }); };
-        this.test = function (req, res) {
-            console.log(res.locals.user);
-            // console.log(user.toString());
-            res.send("Hello World");
-        };
-        this.register = function (req, res) {
-            console.log(req.body);
-            Users_1.Users.createNewUser(req.body.username, req.body.password);
-            var token = webtokens_1.default.encrypt({
-                username: req.body.username
-            });
-            res.json({
-                status: "All Correct",
-                token: token
-            });
-        };
     }
-    return Authentication;
+    return Post;
 }());
-exports.default = Authentication;
+exports.default = Post;

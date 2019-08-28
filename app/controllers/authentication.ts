@@ -4,14 +4,22 @@ import { Users } from '../models/Users';
 
 export default class Authentication {
 
-    login = (req: Request, res: Response) => {
-        let token = JWT.encrypt(req.body);
+    login = async (req: Request, res: Response) => {
+        let { username, password } = req.body;
+        let user: any = await Users.filter(username);
+        let resp: { token?: string, error?: string } = {
+            error: "Wrong username/password"
+        };
 
-        let response = {
-            token: token
+        if (username === user.username && password === user.password) {
+            let token = JWT.encrypt(username);
+
+            resp = {
+                token: token
+            }
         }
 
-        res.json(response);
+        res.json(resp);
     }
 
     test = (req: Request, res: Response) => {

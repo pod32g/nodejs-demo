@@ -1,13 +1,23 @@
 import { Router } from 'express';
 import Authentication from '../controllers/authentication';
 import AuthenticationMiddleware from '../middleware/authentication';
+import Post from '../controllers/posts';
+import PostsMiddleware from '../middleware/posts';
 
-const router = Router();
+const authRouter = Router();
+const postRouter = Router();
+
 const auth = new Authentication();
 const authMid = new AuthenticationMiddleware();
 
-router.post('/login', authMid.login, auth.login);
-router.post('/test', authMid.test, auth.test);
-router.post('/register', authMid.register, auth.register);
+const post = new Post();
+const postMid = new PostsMiddleware();
 
-export default router;
+authRouter.post('/login', authMid.login, auth.login);
+authRouter.post('/test', authMid.test, auth.test);
+authRouter.post('/register', authMid.register, auth.register);
+
+postRouter.post('/new', postMid.newPost, post.newPost);
+postRouter.post('/', post.getAllPosts);
+
+export { authRouter, postRouter };
