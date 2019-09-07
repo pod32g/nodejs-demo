@@ -3,9 +3,11 @@ import bodyParser from 'body-parser';
 import { authRouter, postRouter } from './routes/router';
 import cors from 'cors';
 import Error from './middleware/globalerrors';
+import 'reflect-metadata';
 
 const app = express();
 
+app.use(Error.globalLogs);
 app.use(Error.globalError);
 app.use(cors());
 

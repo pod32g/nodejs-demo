@@ -20,4 +20,6 @@ authRouter.post('/login', authMid.login, auth.login);
 authRouter.post('/test', authMid.test, auth.test);
 authRouter.post('/register', authMid.register, auth.register);
 postRouter.post('/new', postMid.newPost, post.newPost);
-postRouter.post('/', post.getAllPosts);
+postRouter.get('/', post.getAllPosts);
+postRouter.get('/:postId', postMid.getSinglePost, post.getSinglePost);
+postRouter.get('/like/:postId', postMid.plusOne, post.plusOne);

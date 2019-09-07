@@ -40,8 +40,9 @@ var Post = /** @class */ (function () {
     function Post() {
         var _this = this;
         this.newPost = function (req, res) {
-            var _a = req.body, content = _a.content, image = _a.image;
-            Posts_1.Posts.createNewPost(content, image);
+            var user = res.locals.user;
+            var _a = req.body, title = _a.title, content = _a.content, image = _a.image;
+            Posts_1.Posts.createNewPost(title, content, image, user);
             res.json({
                 status: 'ALL OK'
             });
@@ -53,11 +54,40 @@ var Post = /** @class */ (function () {
                     case 0: return [4 /*yield*/, Posts_1.Posts.getAll()];
                     case 1:
                         posts = _a.sent();
+                        // console.log(posts);
                         res.json({
                             posts: posts
                         });
                         return [2 /*return*/];
                 }
+            });
+        }); };
+        this.getSinglePost = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            var postId, post;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        postId = req.params.postId;
+                        console.log(postId);
+                        return [4 /*yield*/, Posts_1.Posts.getOne(parseInt(postId))];
+                    case 1:
+                        post = _a.sent();
+                        res.json({
+                            post: post
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        }); };
+        this.plusOne = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            var postId;
+            return __generator(this, function (_a) {
+                postId = req.params.postId;
+                Posts_1.Posts.plusLike(parseInt(postId));
+                res.json({
+                    status: "all ok"
+                });
+                return [2 /*return*/];
             });
         }); };
     }

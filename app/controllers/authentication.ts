@@ -7,6 +7,9 @@ export default class Authentication {
     login = async (req: Request, res: Response) => {
         let { username, password } = req.body;
         let user: any = await Users.filter(username);
+        if (user.error) {
+            console.log('error');
+        }
         let resp: { token?: string, error?: string } = {
             error: "Wrong username/password"
         };
@@ -29,7 +32,6 @@ export default class Authentication {
     }
 
     register = (req: Request, res: Response) => {
-        console.log(req.body);
         Users.createNewUser(req.body.username, req.body.password);
 
         let token = JWT.encrypt({

@@ -52,6 +52,9 @@ var Authentication = /** @class */ (function () {
                         return [4 /*yield*/, Users_1.Users.filter(username)];
                     case 1:
                         user = _b.sent();
+                        if (user.error) {
+                            console.log('error');
+                        }
                         resp = {
                             error: "Wrong username/password"
                         };
@@ -72,7 +75,6 @@ var Authentication = /** @class */ (function () {
             res.send("Hello World");
         };
         this.register = function (req, res) {
-            console.log(req.body);
             Users_1.Users.createNewUser(req.body.username, req.body.password);
             var token = webtokens_1.default.encrypt({
                 username: req.body.username

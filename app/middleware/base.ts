@@ -23,6 +23,24 @@ export default class Base {
         }
     }
 
+    checkForURLParams = (req: Request, res: Response, params: string[]) => {
+        let keys = Object.keys(req.params);
+        let missing: string[] = [];
+
+        params.forEach(key => {
+            if (!keys.includes(key)) {
+                missing.push(key);
+            }
+        });
+
+        if (missing.length > 0) {
+            res.status(400).json({
+                "error": "Missing parameters",
+                "missing": missing.toString()
+            });
+        }
+    }
+
     checkAuthentication = (req: Request, res: Response) => {
         let header = req.headers.authorization;
         let token: string = "";

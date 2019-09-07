@@ -23,11 +23,27 @@ var PostsMiddleware = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.newPost = function (req, res, next) {
             var fields = [
+                "title",
                 "content",
                 "image"
             ];
             _this.checkAuthentication(req, res);
+            res.locals.user = _this.user;
             _this.checkForFields(req, res, fields);
+            next();
+        };
+        _this.getSinglePost = function (req, res, next) {
+            var params = [
+                "postId"
+            ];
+            _this.checkForURLParams(req, res, params);
+            next();
+        };
+        _this.plusOne = function (req, res, next) {
+            var params = [
+                "postId"
+            ];
+            _this.checkForURLParams(req, res, params);
             next();
         };
         return _this;

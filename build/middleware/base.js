@@ -23,6 +23,21 @@ var Base = /** @class */ (function () {
                 });
             }
         };
+        this.checkForURLParams = function (req, res, params) {
+            var keys = Object.keys(req.params);
+            var missing = [];
+            params.forEach(function (key) {
+                if (!keys.includes(key)) {
+                    missing.push(key);
+                }
+            });
+            if (missing.length > 0) {
+                res.status(400).json({
+                    "error": "Missing parameters",
+                    "missing": missing.toString()
+                });
+            }
+        };
         this.checkAuthentication = function (req, res) {
             var header = req.headers.authorization;
             var token = "";
