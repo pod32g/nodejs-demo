@@ -37,7 +37,7 @@
     "jsonwebtoken": "^9.0.0",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.29.0",
-    "sqlite3": "^4.1.0",
+    "sqlite3": "^5.1.7",
     "typeorm": "^0.3.17",
     "typescript": "^3.5.3"
   },
