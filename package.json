@@ -38,7 +38,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.29.0",
     "sqlite3": "^5.1.7",
-    "typeorm": "^0.3.17",
+    "typeorm": "^0.3.26",
     "typescript": "^3.5.3"
   },
   "devDependencies": {
